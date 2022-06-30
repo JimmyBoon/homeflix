@@ -1,12 +1,12 @@
 var express = require("express");
 var router = express.Router();
-var path = require("path");
 const mongodb = require("mongodb");
 const { MongoClient } = require("mongodb");
-const fs = require("fs");
 
 // Connection URI
-const uri = "mongodb://localhost:27017";
+// const uri = "mongodb://localhost:27017";
+const uri = "mongodb://192.168.0.38:27017";
+
 // Create a new MongoClient
 const client = new MongoClient(uri, {
   useUnifiedTopology: true,
@@ -14,24 +14,27 @@ const client = new MongoClient(uri, {
 
 /* GET me page. */
 router.get("/", function (req, res) {
-  let filename = req.query.movie
+  let filename = req.query.movie;
 
-  try {
-    client.connect();
-    const db = client.db("movies");
+  client.connect(async function (err) {
+    console.log("Connected Successfully!");
 
-    const bucket = new mongodb.GridFSBucket(db);
+    const database = client.db("movies");
 
-    bucket
-      .openDownloadStreamByName(filename)
-      .pipe(res);
+    const collection = database.collection("fs.files");
 
-    //   client.close();
-  } catch (err) {
-    console.log("error", err);
-    res.send("<h1>Movie is not in database</h1>");
-  }
+    const search = await collection.findOne({ filename: filename });
 
+    console.log(search);
+    if (search === null) {
+      client.close();
+      res.send("<h1>Movie is not in database</h1>");
+      return;
+    }
+    const bucket = new mongodb.GridFSBucket(database);
+
+    bucket.openDownloadStreamByName(filename).pipe(res);
+  });
 });
 
 module.exports = router;
