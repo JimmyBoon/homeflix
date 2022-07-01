@@ -1,19 +1,36 @@
-import React from 'react';
-import './App.css';
-import NavBar from './components/navbar/navbar.component';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import NavBar from "./components/navbar/navbar.component";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {CardGroup} from "reactstrap";
-import MovieCard from './components/moviecard/moviecard.component';
+import { CardList } from "./components/card-list/card-list.component";
 
 function App() {
+  const [movies, setMovies] = useState([]);
+
+  async function GetMovies() {
+    const url = `http://localhost:3001/catalogue`;
+    const response = await fetch(url);
+
+    try {
+      const response_1 = await response.json();
+      console.log(response_1);
+      return response_1;
+    } catch (error) {
+      console.log(error);
+      return console.log("Error in the GetMovies function");
+    }
+  }
+
+  useEffect(() => {
+    GetMovies().then( (data) => setMovies(data));
+  },[]);
+
+  console.log(movies);
+
   return (
     <div className="App">
       <NavBar />
-      <CardGroup>
-        <MovieCard id={1} title={"Movie One"} video={"loftan.mp4"} />
-        <MovieCard id={2} title={"Movie Two"} video={"pirates1.mp4"} />
-        <MovieCard id={3} title={"Movie Three"} />
-      </CardGroup>
+      <CardList movies={movies} />
     </div>
   );
 }
