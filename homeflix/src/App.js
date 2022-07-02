@@ -8,7 +8,7 @@ function App() {
   const [movies, setMovies] = useState([]);
 
   async function GetMovies() {
-    const url = `http://192.168.0.29:8080/catalogue`;
+    const url = `http://192.168.0.38:8080/catalogue`;
     const response = await fetch(url);
 
     try {
