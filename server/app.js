@@ -15,6 +15,10 @@ const imageRouter = require("./routes/image");
 
 var app = express();
 
+const PORT = 8080;
+app.listen(PORT);
+console.log(`Running on port ${PORT}`);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -31,17 +35,17 @@ app.use('/movie', movieRouter);
 app.use("/image", imageRouter);
 app.use('/catalogue', catalogueRouter);
 
-app.get("/metadata", async (req, res) => {
-  try {
-    // The find() method returns a cursor that manages the results of your query
-    const cursor = bucket.find({});
-    // Retrieve the data as array
-    const filesMetadata = await cursor.toArray();
-    res.json(filesMetadata);
-  } catch (err) {
-    res.json({ err: `Error: ${err.message}` });
-  }
-});
+// app.get("/metadata", async (req, res) => {
+//   try {
+//     // The find() method returns a cursor that manages the results of your query
+//     const cursor = bucket.find({});
+//     // Retrieve the data as array
+//     const filesMetadata = await cursor.toArray();
+//     res.json(filesMetadata);
+//   } catch (err) {
+//     res.json({ err: `Error: ${err.message}` });
+//   }
+// });
 
 
 

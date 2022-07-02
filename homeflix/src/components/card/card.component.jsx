@@ -1,5 +1,5 @@
 import React from "react";
-import "./card.styles.css";
+import "./card.styles.scss";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap"
 

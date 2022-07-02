@@ -20,7 +20,7 @@ function MoviePage(props) {
         //src={`http://localhost:3001/movie?movie=${video}`}
       >
         <source
-          src={`http://localhost:3001/movie?movie=${video}`}
+          src={`http://localhost:8080/movie?movie=${video}`}
           type="video/mp4"
         />
       </video>
