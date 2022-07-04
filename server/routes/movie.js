@@ -2,9 +2,9 @@ var express = require("express");
 var router = express.Router();
 const mongodb = require("mongodb");
 const { MongoClient } = require("mongodb");
+const fs = require("fs");
 
 // Connection URI
-//const uri = "mongodb://localhost:27017";
 const uri = "mongodb://192.168.0.38:27017";
 
 // Create a new MongoClient
@@ -12,7 +12,6 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 
-/* GET me page. */
 router.get("/", function (req, res) {
   let filename = req.query.movie;
 
@@ -33,6 +32,7 @@ router.get("/", function (req, res) {
         res.status(404).send("No video uploaded!");
         return;
       }
+      console.log("File Found");
 
       // Create response headers
       const videoSize = video.length;
@@ -49,12 +49,14 @@ router.get("/", function (req, res) {
 
       res.writeHead(206, headers);
 
+      //Send the movie
       const bucket = new mongodb.GridFSBucket(database);
-
-      const downloadStream = bucket.openDownloadStreamByName(filename, {
-        start,
-        end: video.length,
-      });
+      console.log("Beginning download");
+      const downloadStream = bucket
+        .openDownloadStreamByName(filename, {
+          start,
+          end: video.length,
+        });
 
       downloadStream.pipe(res);
     });

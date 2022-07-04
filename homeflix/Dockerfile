@@ -9,8 +9,7 @@ WORKDIR /app
 # Copy all files from current directory to working dir in image
 COPY . .
 # install node modules and build assets
-RUN npm install --legacy-peer-deps
-RUN npm run build
+RUN yarn install && yarn build
 
 # nginx state for serving content
 FROM nginx:alpine
