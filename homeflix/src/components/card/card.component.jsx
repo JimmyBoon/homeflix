@@ -7,7 +7,7 @@ export const Card = (props) => {
   const navigate = useNavigate();
   return (
     <div className="card-container">
-      <img alt="movie" src={`http://192.168.0.38:8080/image?image=${props.movie.image}`}></img>
+      <img alt="movie" src={`http://192.168.0.29:8080/image?image=${props.movie.image}`}></img>
       <h2> {props.movie.title} </h2>
       <Button onClick={() => navigate(`/movie?video=${props.movie.file}`)}>
         Play

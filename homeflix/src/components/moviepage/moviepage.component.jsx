@@ -7,6 +7,7 @@ function MoviePage(props) {
   const [searchParams] = useSearchParams();
   const video = searchParams.get("video");
   
+  //Address of the server to get the video:
   const video_src = `http://192.168.0.29:8080/movie?movie=${video}`;
 
 
