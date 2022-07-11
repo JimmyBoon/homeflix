@@ -19,8 +19,9 @@ Same with adding an image for the movie, with the best height and width of the i
 mongofiles -d movies put movie_name.jpg -h 192.168.0.38
 
 The 'movies' database needs a collection called 'catalog'. This will contain the details of the movies to display on the front end. Note: the "_id" is assigned by MongoDB. Add a catalog document for each movie.
+
 {
-    _id: ObjectId("62bfb4d0869330a4004c8d0c"),
+    _id: ObjectId(""),
     id: 1,
     title: 'Movie Name',
     file: 'movie_name.mp4',
